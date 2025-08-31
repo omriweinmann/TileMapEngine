@@ -5,7 +5,11 @@ extends Node2D
 
 @export var seed = -1
 
+var speed = 150
+var zoom_speed = 0.025
+
 var random = RandomNumberGenerator.new()
+var cooldown = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -34,8 +38,24 @@ func _ready() -> void:
 			#print(noise_value_processed)
 			$TileMapLayer.set_cell(Vector2i(x,y),0,Vector2i(0,noise_value_processed))
 			
-			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if cooldown == false:
+		cooldown = true
+		$InputCooldown.start(0.05)
+		var direction = Input.get_vector("CamLeft", "CamRight", "CamUp", "CamDown")
+		var zoom_dir = Input.get_axis("CamZoomOut","CamZoomIn")
+		
+		$Camera2D.position += direction * speed
+		var zoom_amount = zoom_dir * zoom_speed
+		var zoom = $Camera2D.zoom + Vector2(zoom_amount,zoom_amount)
+		$Camera2D.zoom = Vector2(max(0.1,min(1,zoom.x)),max(0.1,min(1,zoom.y)))
+		print($Camera2D.zoom)
+	
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		
+
+
+func _on_input_cooldown_timeout() -> void:
+	cooldown = false
