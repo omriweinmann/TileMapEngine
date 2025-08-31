@@ -10,7 +10,7 @@ noise_type = 0
 noise = SubResource("FastNoiseLite_o5qli")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
-resource_name = "TileSet"
+resource_name = "Atlas"
 texture = ExtResource("2_0wfyh")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -20,7 +20,7 @@ texture_region_size = Vector2i(32, 32)
 0:4/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ya4ey"]
-tile_size = Vector2i(32, 32)
+tile_size = Vector2i(32, 30)
 sources/0 = SubResource("TileSetAtlasSource_sugp2")
 
 [node name="Main" type="Node2D"]

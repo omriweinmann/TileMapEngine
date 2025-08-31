@@ -66,6 +66,13 @@ layout_mode = 2
 layout_mode = 2
 placeholder_text = "Seed (integer) (default: -1) (put -1 for random)"
 
+[node name="InputAltitude" type="MarginContainer" parent="Main"]
+layout_mode = 2
+
+[node name="InputAltitudeInput" type="LineEdit" parent="Main/InputAltitude"]
+layout_mode = 2
+placeholder_text = "Altitude Offset (-1 to 1) (default 0)"
+
 [node name="Button" type="Button" parent="Main"]
 layout_mode = 2
 text = "Run"
@@ -73,4 +80,5 @@ text = "Run"
 [connection signal="text_submitted" from="Main/InputWidth/InputWidthInput" to="." method="_on_input_width_input_text_submitted"]
 [connection signal="text_submitted" from="Main/InputHeight/InputHeightInput" to="." method="_on_input_height_input_text_submitted"]
 [connection signal="text_submitted" from="Main/InputSeed/InputSeedInput" to="." method="_on_input_seed_input_text_submitted"]
+[connection signal="text_submitted" from="Main/InputAltitude/InputAltitudeInput" to="." method="_on_input_altitude_input_text_submitted"]
 [connection signal="pressed" from="Main/Button" to="." method="_on_button_pressed"]
