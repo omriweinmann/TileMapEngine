@@ -1,9 +1,13 @@
 extends Node2D
 
-@export var width = 250
-@export var height = 250
+var width:int = Global.width
+var height:int = Global.height
 
-@export var seed = -1
+var seed:int = Global.seed
+
+@export var max_zoom:float = 1
+@export var min_zoom:float = 0.1
+
 
 var speed = 150
 var zoom_speed = 0.025
@@ -13,6 +17,10 @@ var cooldown = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Camera2D.limit_left = 0
+	$Camera2D.limit_right = width * 32
+	$Camera2D.limit_top = 0
+	$Camera2D.limit_bottom = height * 32
 	if seed == -1:
 		seed = random.randi()
 		print(seed)
@@ -40,20 +48,30 @@ func _ready() -> void:
 			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var vp_size = get_viewport().get_visible_rect().size
+	#print((width*32)*$Camera2D.zoom[0], (height*32)*$Camera2D.zoom[1])
+	if vp_size[0] < (width*32)*min_zoom or vp_size[0] < (height*32)*min_zoom:
+		min_zoom -= 0.025
+		min_zoom = max(0.2, min_zoom)
+		var zoom = $Camera2D.zoom
+		$Camera2D.zoom = Vector2(max(min_zoom,min(max_zoom,zoom.x)),max(min_zoom,min(max_zoom,zoom.y)))
+	if vp_size[0] > (width*32)*$Camera2D.zoom[0] or vp_size[0] > (height*32)*$Camera2D.zoom[1]:
+		min_zoom += 0.025
+		var zoom = $Camera2D.zoom
+		$Camera2D.zoom = Vector2(max(min_zoom,min(max_zoom,zoom.x)),max(min_zoom,min(max_zoom,zoom.y)))
 	if cooldown == false:
 		cooldown = true
-		$InputCooldown.start(0.05)
 		var direction = Input.get_vector("CamLeft", "CamRight", "CamUp", "CamDown")
 		var zoom_dir = Input.get_axis("CamZoomOut","CamZoomIn")
 		
 		$Camera2D.position += direction * speed
 		var zoom_amount = zoom_dir * zoom_speed
 		var zoom = $Camera2D.zoom + Vector2(zoom_amount,zoom_amount)
-		$Camera2D.zoom = Vector2(max(0.1,min(1,zoom.x)),max(0.1,min(1,zoom.y)))
-		print($Camera2D.zoom)
+		$Camera2D.zoom = Vector2(max(min_zoom+0.025,min(max_zoom,zoom.x)),max(min_zoom+0.025,min(max_zoom,zoom.y)))
+		print($Camera2D.zoom, max_zoom, min_zoom+0.025)
 	
 	if Input.is_action_just_pressed("Restart"):
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		get_tree().change_scene_to_file("res://scenes/settings_menu.tscn")
 		
 
 

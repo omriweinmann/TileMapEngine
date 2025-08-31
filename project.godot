@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="TileMapEngine"
-run/main_scene="uid://duw1wm8yln4wb"
+run/main_scene="uid://qmbxfe7th6jq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*res://global/global.gd"
 
 [editor_plugins]
 

@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://qmbxfe7th6jq"]
+
+[ext_resource type="Script" uid="uid://kdknat4x7oxv" path="res://scenes/settings_menu.gd" id="1_05p07"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_05p07")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.125911, 0.125911, 0.125911, 1)
+
+[node name="Main" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -178.0
+offset_top = -48.5
+offset_right = 178.0
+offset_bottom = 48.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="MarginContainer" parent="Main"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Main/Title"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "TileMapEngine by Omri"
+horizontal_alignment = 1
+justification_flags = 162
+
+[node name="InputWidth" type="MarginContainer" parent="Main"]
+layout_mode = 2
+
+[node name="InputWidthInput" type="LineEdit" parent="Main/InputWidth"]
+layout_mode = 2
+placeholder_text = "Width (integer) (default: 250)"
+
+[node name="InputHeight" type="MarginContainer" parent="Main"]
+layout_mode = 2
+
+[node name="InputHeightInput" type="LineEdit" parent="Main/InputHeight"]
+layout_mode = 2
+placeholder_text = "Height (integer) (default: 250)"
+
+[node name="InputSeed" type="MarginContainer" parent="Main"]
+layout_mode = 2
+
+[node name="InputSeedInput" type="LineEdit" parent="Main/InputSeed"]
+layout_mode = 2
+placeholder_text = "Seed (integer) (default: -1) (put -1 for random)"
+
+[node name="Button" type="Button" parent="Main"]
+layout_mode = 2
+text = "Run"
+
+[connection signal="text_submitted" from="Main/InputWidth/InputWidthInput" to="." method="_on_input_width_input_text_submitted"]
+[connection signal="text_submitted" from="Main/InputHeight/InputHeightInput" to="." method="_on_input_height_input_text_submitted"]
+[connection signal="text_submitted" from="Main/InputSeed/InputSeedInput" to="." method="_on_input_seed_input_text_submitted"]
+[connection signal="pressed" from="Main/Button" to="." method="_on_button_pressed"]
